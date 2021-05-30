@@ -1,8 +1,8 @@
 function getRandomNumber (min, max) {
   if (max <= min) {
-    return alert("Minimum value must be less than maximum");
+    throw Error('Minimum value must be less than maximum');
   }
- return Math.random() * (max - min + 1);  // Reference: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+  return Math.random() * (max - min + 1);  // Reference: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 }
 
 function getRandomNumberInclusive(min, max) {
