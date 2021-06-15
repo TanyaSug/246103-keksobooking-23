@@ -86,8 +86,5 @@ const getLocation = () => ({
   lng: getRandomNumberFloat(10.70000, 139.80000, 5),
 });
 
-getAuthor();
-getOffer();
-getLocation();
 
 export {getAuthor, getOffer, getLocation};

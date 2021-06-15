@@ -14,7 +14,5 @@ function getRandomNumberFloat(min, max, decimalNumbers) {
   return randomInt.toFixed(decimalNumbers);
 }
 
-getRandomNumberInclusive(47, 240);
-getRandomNumberFloat(30.75, 90.46, 2);
 
 export {getRandomNumberInclusive, getRandomNumberFloat};
