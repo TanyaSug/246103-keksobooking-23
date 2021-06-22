@@ -4,13 +4,7 @@ const OFFER = {
   title: 'Три поросенка',
   address: '',
   price: '',
-  type: [
-    'palace',
-    'flat',
-    'house',
-    'bungalow',
-    'hotel',
-  ],
+  type: 'palace',
   rooms: '',
   guests: '',
   checkin:[
@@ -38,11 +32,8 @@ const OFFER = {
   ],
 };
 
-const lastFeaturesElementIndex = OFFER.features.length - 1;
-const lastPhotosElementIndex = OFFER.photos.length - 1;
 const lastCheckoutElementIndex = OFFER.checkout.length -1;
 const lastCheckinElementIndex = OFFER.checkin.length -1;
-const lastTypeElementIndex = OFFER.type.length -1;
 
 const getAuthor = () => {
   const randomAvatarIndex = getRandomNumberInclusive(1, 8);
@@ -51,15 +42,6 @@ const getAuthor = () => {
     avatar,
   };
 };
-
-
-const features = new Array(getRandomNumberInclusive(1, lastFeaturesElementIndex))
-  .fill(null)
-  .map(() => OFFER.features[getRandomNumberInclusive(0, lastFeaturesElementIndex)]);
-
-const photos = new Array(getRandomNumberInclusive(1, lastPhotosElementIndex))
-  .fill(null)
-  .map(() => OFFER.photos[getRandomNumberInclusive(0, lastPhotosElementIndex)]);
 
 const address = {
   lat: getRandomNumberFloat(10.00000, 100.00000, 5),
@@ -70,14 +52,14 @@ const getOffer = () => ({
   title: OFFER.title,
   address: `${address.lat}, ${address.lng}`,
   price: getRandomNumberInclusive(100, 1000),
-  type: OFFER.type[getRandomNumberInclusive(0, lastTypeElementIndex)],
+  type: OFFER.type,
   rooms: getRandomNumberInclusive(1, 5),
   guests: getRandomNumberInclusive(1, 10),
   checkin: OFFER.checkin[getRandomNumberInclusive(0, lastCheckinElementIndex)],
   checkout: OFFER.checkout[getRandomNumberInclusive(0, lastCheckoutElementIndex)],
-  features,
+  features: OFFER.features,
   description: OFFER.description,
-  photos,
+  photos: OFFER.photos,
 });
 
 
@@ -86,5 +68,12 @@ const getLocation = () => ({
   lng: getRandomNumberFloat(10.70000, 139.80000, 5),
 });
 
+const getOfferTypes = () => ({
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+});
 
-export {getAuthor, getOffer, getLocation};
+export {getAuthor, getOffer, getLocation, getOfferTypes};
