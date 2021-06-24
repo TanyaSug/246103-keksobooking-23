@@ -8,59 +8,59 @@ const cardTemplate = document.querySelector('#card')
 const cardElement= cardTemplate.cloneNode(true);
 
 
-const OFFER = getOffer();
-const AVATAR = getAuthor();
-const OFFERTYPES = getOfferTypes();
+const mockOffer = getOffer();
+const authorAvatar = getAuthor();
+const offerTypes = getOfferTypes();
 
 // Отрисуйте один из сгенерированных DOM-элементов, например первый, в блок #map-canvas,
 // чтобы проверить, что данные в разметку были вставлены корректно.
 const popupTitle = cardElement.querySelector('.popup__title').cloneNode();
-if (OFFER.title) {
-  popupTitle.textContent = OFFER.title;
+if (mockOffer.title) {
+  popupTitle.textContent = mockOffer.title;
 } else {
   popupTitle.style.display = 'none';
 }
 mapCanvas.appendChild(popupTitle);
 
 const popupTextAddress = cardElement.querySelector('.popup__text--address');
-if (OFFER.address) {
-  popupTextAddress.textContent = OFFER.address;
+if (mockOffer.address) {
+  popupTextAddress.textContent = mockOffer.address;
 } else {
   popupTextAddress.style.display = 'none';
 }
 
 const popupTextPrice = cardElement.querySelector('.popup__text--price');
-if (OFFER.price) {
-  popupTextPrice.textContent = `${OFFER.price}  ₽/ночь`;
+if (mockOffer.price) {
+  popupTextPrice.textContent = `${mockOffer.price}  ₽/ночь`;
 } else {
   popupTextPrice.style.display = 'none';
 }
 
 const popupType = cardElement.querySelector('.popup__type');
-if (OFFER.type) {
-  popupType.textContent = OFFERTYPES[OFFER.type];
+if (mockOffer.type) {
+  popupType.textContent = offerTypes[mockOffer.type];
 } else {
   popupType.style.display = 'none';
 }
 
 const popupTextCapacity = cardElement.querySelector('.popup__text--capacity');
-if (OFFER.rooms && OFFER.guests) {
-  popupTextCapacity.textContent = `${OFFER.rooms} комнаты для ${OFFER.guests} гостей`;
+if (mockOffer.rooms && mockOffer.guests) {
+  popupTextCapacity.textContent = `${mockOffer.rooms} комнаты для ${mockOffer.guests} гостей`;
 } else {
   popupTextCapacity.style.display = 'none';
 }
 
 const popupTextTime = cardElement.querySelector('.popup__text--time');
-if (OFFER.checkin && OFFER.checkout) {
-  popupTextTime.textContent = `Заезд после ${OFFER.checkin}, выезд до ${OFFER.checkout}`;
+if (mockOffer.checkin && mockOffer.checkout) {
+  popupTextTime.textContent = `Заезд после ${mockOffer.checkin}, выезд до ${mockOffer.checkout}`;
 } else {
   popupTextTime.style.display = 'none';
 }
 
 const featureItems = cardElement.querySelectorAll('.popup__feature');
-if (OFFER.features && OFFER.features.length > 0) {
+if (mockOffer.features && mockOffer.features.length > 0) {
   for (let idx = 0; idx <= featureItems.length - 1; idx++) {
-    featureItems[idx].textContent = OFFER.features[idx];
+    featureItems[idx].textContent = mockOffer.features[idx];
   }
 }else {
   const featureList = cardElement.querySelector('.popup__features');
@@ -69,18 +69,18 @@ if (OFFER.features && OFFER.features.length > 0) {
 
 
 const popupDescription = cardElement.querySelector('.popup__description');
-if (OFFER.description) {
-  popupDescription.textContent = OFFER.description;
+if (mockOffer.description) {
+  popupDescription.textContent = mockOffer.description;
 } else {
   popupDescription.style.display = 'none';
 }
 
 const photoList = cardElement.querySelector('.popup__photos');
-if (OFFER.photos && OFFER.photos.length) {
+if (mockOffer.photos && mockOffer.photos.length) {
   const removedPhoto = photoList.removeChild(photoList.firstElementChild);
-  for (let idx = 0; idx <= OFFER.photos.length - 1; idx++) {
+  for (let idx = 0; idx <= mockOffer.photos.length - 1; idx++) {
     const clonedPhoto = removedPhoto.cloneNode();
-    clonedPhoto.src = OFFER.photos[idx];
+    clonedPhoto.src = mockOffer.photos[idx];
     photoList.appendChild(clonedPhoto);
   }
 } else {
@@ -88,8 +88,8 @@ if (OFFER.photos && OFFER.photos.length) {
 }
 
 const popupAvatar = cardElement.querySelector('.popup__avatar');
-if (AVATAR.avatar) {
-  popupAvatar.src = AVATAR.avatar;
+if (authorAvatar.avatar) {
+  popupAvatar.src = authorAvatar.avatar;
 } else {
   popupAvatar.style.display = 'none';
 }

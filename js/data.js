@@ -1,6 +1,6 @@
 import {getRandomNumberInclusive, getRandomNumberFloat} from './utils.js';
 
-const OFFER = {
+const mockOffer = {
   title: 'Три поросенка',
   address: '',
   price: '',
@@ -32,8 +32,8 @@ const OFFER = {
   ],
 };
 
-const lastCheckoutElementIndex = OFFER.checkout.length -1;
-const lastCheckinElementIndex = OFFER.checkin.length -1;
+const lastCheckoutElementIndex = mockOffer.checkout.length -1;
+const lastCheckinElementIndex = mockOffer.checkin.length -1;
 
 const getAuthor = () => {
   const randomAvatarIndex = getRandomNumberInclusive(1, 8);
@@ -49,17 +49,17 @@ const address = {
 };
 
 const getOffer = () => ({
-  title: OFFER.title,
+  title: mockOffer.title,
   address: `${address.lat}, ${address.lng}`,
   price: getRandomNumberInclusive(100, 1000),
-  type: OFFER.type,
+  type: mockOffer.type,
   rooms: getRandomNumberInclusive(1, 5),
   guests: getRandomNumberInclusive(1, 10),
-  checkin: OFFER.checkin[getRandomNumberInclusive(0, lastCheckinElementIndex)],
-  checkout: OFFER.checkout[getRandomNumberInclusive(0, lastCheckoutElementIndex)],
-  features: OFFER.features,
-  description: OFFER.description,
-  photos: OFFER.photos,
+  checkin: mockOffer.checkin[getRandomNumberInclusive(0, lastCheckinElementIndex)],
+  checkout: mockOffer.checkout[getRandomNumberInclusive(0, lastCheckoutElementIndex)],
+  features: mockOffer.features,
+  description: mockOffer.description,
+  photos: mockOffer.photos,
 });
 
 
