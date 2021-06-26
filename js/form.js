@@ -104,3 +104,32 @@ const addressFieldValue = {
   lng: 139.69171,
 };
 addressField.setAttribute('value', `${addressFieldValue.lat} ${addressFieldValue.lng}`);
+
+// Функция которая переключает страницу из активного состояния в неактивное и наоборот
+const formElements =  formField.querySelectorAll('fieldset');
+const mapFilterForm = document.querySelector('.map__filters');
+const mapFilterElements = mapFilterForm.querySelectorAll('.map__filter');
+const mapFilterFeatures = mapFilterForm.querySelectorAll('.map__features');
+
+const toggleFormsCondition = (disabled) => {
+  if (disabled) {
+    formField.classList.add('ad-form--disabled');
+    mapFilterForm.classList.add('map__filters--disabled');
+  } else {
+    formField.classList.remove('ad-form--disabled');
+    mapFilterForm.classList.remove('map__filters--disabled');
+  }
+  formElements.forEach(
+    (element) => {
+      element.setAttribute('disabled', disabled);
+    });
+  mapFilterElements.forEach(
+    (element) => {
+      element.setAttribute('disabled', disabled);
+    });
+  mapFilterFeatures.forEach(
+    (element) => {
+      element.setAttribute('disabled', disabled);
+    });
+};
+toggleFormsCondition(true);
