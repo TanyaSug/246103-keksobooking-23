@@ -1,10 +1,13 @@
+import {initialCoordinates} from './data.js';
+
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE_VALUE = 1000000;
 
 const formField =  document.querySelector('.ad-form');
-const formTitleInput = formField.querySelector('#title');
 
+const formTitleInput = formField.querySelector('#title');
 formTitleInput.addEventListener('invalid', () => {
   if (formTitleInput.validity.tooShort) {
     formTitleInput.setCustomValidity ('Заголовок обьявления должен состоять минимум из 30 символов');
@@ -51,7 +54,6 @@ formPriceInput.addEventListener('input', () => {
 
 const roomNumber = formField.querySelector('#room_number');
 const capacity = formField.querySelector('#capacity');
-// const capasityOptions = capacity.querySelectorAll('option');
 
 roomNumber.addEventListener('change',   () =>{
   if (roomNumber.value === '100') {
@@ -99,37 +101,41 @@ formTypeSelect.addEventListener('change', () => {
 
 // Координаты центра Токио
 const addressField = formField.querySelector('#address');
-const addressFieldValue = {
-  lat: 35.68950,
-  lng: 139.69171,
-};
-addressField.setAttribute('value', `${addressFieldValue.lat} ${addressFieldValue.lng}`);
+addressField.setAttribute('value', `широта: ${initialCoordinates.lat} долгота: ${initialCoordinates.lng}`);
+
 
 // Функция которая переключает страницу из активного состояния в неактивное и наоборот
-const formElements =  formField.querySelectorAll('fieldset');
 const mapFilterForm = document.querySelector('.map__filters');
-const mapFilterElements = mapFilterForm.querySelectorAll('.map__filter');
-const mapFilterFeatures = mapFilterForm.querySelectorAll('.map__features');
-
+const mapFilterElements = Array.from(mapFilterForm.children);
+const formElements = Array.from(formField.children);
 const toggleFormsCondition = (disabled) => {
   if (disabled) {
     formField.classList.add('ad-form--disabled');
     mapFilterForm.classList.add('map__filters--disabled');
-  } else {
+    formElements.forEach(
+      (element) => {
+        element.setAttribute('disabled', disabled);
+      });
+    mapFilterElements.forEach(
+      (element) => {
+        element.setAttribute('disabled', disabled);
+      });
+  }else {
     formField.classList.remove('ad-form--disabled');
     mapFilterForm.classList.remove('map__filters--disabled');
+    formElements.forEach(
+      (element) => {
+        element.removeAttribute('disabled');
+      });
+    mapFilterElements.forEach(
+      (element) => {
+        element.removeAttribute('disabled');
+      });
   }
-  formElements.forEach(
-    (element) => {
-      element.setAttribute('disabled', disabled);
-    });
-  mapFilterElements.forEach(
-    (element) => {
-      element.setAttribute('disabled', disabled);
-    });
-  mapFilterFeatures.forEach(
-    (element) => {
-      element.setAttribute('disabled', disabled);
-    });
 };
 toggleFormsCondition(true);
+
+
+export {toggleFormsCondition, addressField};
+
+

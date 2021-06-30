@@ -1,5 +1,8 @@
 import {getRandomNumberInclusive, getRandomNumberFloat} from './utils.js';
-
+const initialCoordinates =  {
+  lat: 35.68950,
+  lng: 139.69171,
+};
 const mockOffer = {
   title: 'Три поросенка',
   address: '',
@@ -76,4 +79,4 @@ const getOfferTypes = () => ({
   hotel: 'Отель',
 });
 
-export {getAuthor, getOffer, getLocation, getOfferTypes};
+export {getAuthor, getOffer, getLocation, getOfferTypes, initialCoordinates};
