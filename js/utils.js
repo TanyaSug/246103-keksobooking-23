@@ -16,3 +16,7 @@ function getRandomNumberFloat(min, max, decimalNumbers) {
 
 
 export {getRandomNumberInclusive, getRandomNumberFloat};
+
+// const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+//
+

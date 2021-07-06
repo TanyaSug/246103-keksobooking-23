@@ -1,4 +1,5 @@
 import {initialCoordinates} from './data.js';
+// import {mainPinMarker} from './map.js';
 
 
 const MIN_TITLE_LENGTH = 30;
@@ -136,6 +137,49 @@ const toggleFormsCondition = (disabled) => {
 toggleFormsCondition(true);
 
 
-export {toggleFormsCondition, addressField};
+// // close message block
+const closeMessageBlock = (messageBlock) => {
+  messageBlock.remove();
+
+};
+
+const showMessageBlock = (isSuccess) => {
+
+  let messageTemplate;
+
+  if(isSuccess) {
+    messageTemplate = document.querySelector('#success')
+      .content
+      .querySelector('.success');
+  } else {
+    messageTemplate = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+  }
+  const messageBlock = messageTemplate.cloneNode(true);
+
+  document.body.append(messageBlock);
+
+  document.addEventListener('keydown', (evt) => {
+    evt.preventDefault();
+    if ( evt.key === 'Escape' || evt.key === 'Esc') {
+      closeMessageBlock(messageBlock);
+    }
+  });
+  document.addEventListener('click', () => {
+    closeMessageBlock(messageBlock);
+  });
+};
+
+
+// reset form data
+
+const formFieldReset = formField.querySelector('.ad-form__reset');
+formFieldReset.addEventListener('click', () => {
+  formField.reset();
+  mapFilterForm.reset();
+});
+
+export {toggleFormsCondition, addressField, showMessageBlock};
 
 

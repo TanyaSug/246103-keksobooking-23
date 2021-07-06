@@ -1,18 +1,18 @@
 import {toggleFormsCondition, addressField} from './form.js';
 import {createNewCard} from './card.js';
 import {initialCoordinates} from './data.js';
+import {getUserOffers} from './user-offers.js';
+// import {fetchOffers} from './main.js';
+
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    setTimeout(() => {
-      toggleFormsCondition(false);
-
-    }, 1000);
+    toggleFormsCondition(false);
   })
   .setView({
     lat: initialCoordinates.lat,
     lng: initialCoordinates.lng,
-  }, 10);
+  }, 13);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -20,6 +20,36 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+const createUserOfferMarkers = (offers) => {
+  offers.slice(0, 1).forEach((offer) => {
+    const userOfferPinIcon = L.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+    const userOfferMarker = L.marker({
+      lat: offer.location.lat,
+      lng: offer.location.lng,
+    },
+    {
+      icon: userOfferPinIcon,
+    },
+    );
+
+    userOfferMarker
+      .addTo(map);
+    // .bindPopup(JSON.stringify(offer, null, 2),
+    //   {
+    //     keepInView: true,
+    //   },
+    // );
+  });
+};
+
+// fetch userOffers from server
+const USER_OFFER_MARKERS_COUNT = 10;
+
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -43,8 +73,7 @@ mainPinMarker.on('drag', (evt) => {
   addressField.value = getCoordinate(lat, lng);
 });
 
-const createOfferMarker = (evt) => {
-  evt.preventDefault();
+const createOfferMarker = () => {
   const offerPinIcon = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [40, 40],
@@ -66,10 +95,10 @@ const createOfferMarker = (evt) => {
     );
 };
 
-const formField =  document.querySelector('.ad-form');
-formField.addEventListener('submit', (evt) => {
-  createOfferMarker(evt);
-  formField.reset();
-});
 
-
+// const formField =  document.querySelector('.ad-form');
+// formField.addEventListener('submit', (evt) => {
+//   createOfferMarker(evt);
+//   formField.reset();
+// });
+export {createOfferMarker, mainPinMarker};

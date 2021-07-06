@@ -1,12 +1,10 @@
 const formField =  document.querySelector('.ad-form');
+const cardTemplate = document.querySelector('#card')
+  .content
+  .querySelector('.popup');
 
 const createNewCard = () => {
-
-  const cardTemplate = document.querySelector('#card')
-    .content
-    .querySelector('.popup');
   const cardElement = cardTemplate.cloneNode(true);
-
   const cardTitle = formField.querySelector('#title');
   const popupTitle = cardElement.querySelector('.popup__title');
   if (cardTitle.value) {
@@ -35,8 +33,9 @@ const createNewCard = () => {
   } else {
     popupType.style.display = 'none';
   }
-  const cardRoom = formField.querySelector('#room_number');
+  const cardRoom =  formField.querySelector('#room_number');
   const cardGuest = formField.querySelector('#capacity');
+
   const popupTextCapacity = cardElement.querySelector('.popup__text--capacity');
   if (cardRoom.value && cardGuest.value) {
     popupTextCapacity.textContent = `${cardRoom.value} комнаты для ${cardGuest.value} гостей`;
@@ -88,4 +87,18 @@ const createNewCard = () => {
   return cardElement;
 };
 
-export {createNewCard};
+const addMarkerTooltip = (data) => {
+  const nextCardElement = cardTemplate.cloneNode(true);
+
+  nextCardElement.querySelector('.popup__avatar').src = data.author.avatar ;
+  nextCardElement.querySelector('.popup__title').textContent = data.offer.title;
+  nextCardElement.querySelector('.popup__type').textContent = data.offer.type;
+  nextCardElement.querySelector('.popup__text--price').textContent = `${data.offer.price}  ₽/ночь`;
+  nextCardElement.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей`;
+  nextCardElement.querySelector('.popup__text--time').textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
+  nextCardElement.querySelector('.popup__feature').textContent = data.offer.features;
+  nextCardElement.querySelector('.popup__description').textContent = data.offer.description;
+  nextCardElement.querySelector('.popup__photos').textContent = data.offer.photos;
+  return nextCardElement;
+};
+export {createNewCard, addMarkerTooltip};

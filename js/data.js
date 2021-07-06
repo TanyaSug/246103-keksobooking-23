@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {getRandomNumberInclusive, getRandomNumberFloat} from './utils.js';
 const initialCoordinates =  {
   lat: 35.68950,
