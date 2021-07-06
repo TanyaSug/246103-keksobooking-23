@@ -49,7 +49,9 @@ const createUserOfferMarkers = (offers) => {
 
 // fetch userOffers from server
 const USER_OFFER_MARKERS_COUNT = 10;
-
+getUserOffers().then((offers) => {
+  createUserOfferMarkers(offers.slice(0, USER_OFFER_MARKERS_COUNT));
+});
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
