@@ -2,7 +2,8 @@ import {toggleFormsCondition} from './form.js';
 import {createNewCard} from './card.js';
 import {initialCoordinates} from './data.js';
 
-let map;
+
+export let map;
 
 export const createOfferMarker = (mainPinMarker) => {
   const offerPinIcon = L.icon({
@@ -31,13 +32,12 @@ export const initMap = (canvas, mainPinMarker) => {
     .on('load', () => {
       setTimeout(() => {
         toggleFormsCondition(false);
-
       }, 1000);
     })
     .setView({
       lat: initialCoordinates.lat,
       lng: initialCoordinates.lng,
-    }, 10);
+    }, 13);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -48,3 +48,4 @@ export const initMap = (canvas, mainPinMarker) => {
 
   mainPinMarker.addTo(map);
 };
+

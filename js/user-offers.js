@@ -1,21 +1,98 @@
 /* eslint-disable */
-// import {createNewCard} from './card.js';
+//  import {createNewCard} from './card.js';
+// import {initialCoordinates} from "./data";
+import {addMarkerTooltip} from './card.js';
+import {map} from './map.js';
+import {getUserOffers} from './api.js';
 
-const getUserOffers = () => fetch(
-  'https://23.javascript.pages.academy/keksobooking/data',
-  {
-    method: 'GET',
-    credentials: 'same-origin',
-  },
-)
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
+const maxAmountOfferMarkers = 10;
+
+
+
+const isHousingTypeOk = (_offer, _housingType) => true;
+const isHousingPriceOk = (_offer, _housingPrice) => true;
+const isHousingRoomsOk = (_offer, _housingRooms) => true;
+const isHousingGuestsOk = (_offer, _housingGuests) => true;
+const isHousingFeaturesOk = (_offer, _housingFeatures) => true;
+
+
+const showOffersMarker = (allOffers, currentFilters) => {
+  const {
+    housingType,
+    housingPrice,
+    housingRooms,
+    housingGuests,
+    housingFeatures,
+  }
+  = currentFilters;
+
+  allOffers.filter ((offer) => {
+    if (!isHousingTypeOk (offer, housingType)) {
+      return false;
     }
-    throw new Error(`${response.status} ${response.statusText}`);
+    if (!isHousingPriceOk (offer, housingPrice)) {
+      return false;
+    }
+    if (!isHousingRoomsOk (offer, housingRooms)) {
+      return false;
+    }
+    if (!isHousingGuestsOk (offer, housingGuests)) {
+      return false;
+    }
+    if (!isHousingFeaturesOk (offer, housingFeatures)) {
+      return false;
+    }
+    return true;
   })
-  .catch((err) => {
-    console.log(err);
-  });
+    .slice (0, maxAmountOfferMarkers)
+    // .forEach((offer) => {
+    //   const sameOfferIcon =  L.icon({
+    //     iconUrl: 'img/pin.svg',
+    //     iconSize: [40, 40],
+    //     iconAnchor: [20, 40],
+    //   });
+    //   const sameOfferMarker = L.marker({
+    //     lat: offer.location.lat,
+    //     lng: offer.location.lng,
+    //   },
+    //   {
+    //     icon: sameOfferIcon,
+    //   },
+    //   );
+    //   sameOfferMarker
+    //     .addTo(map)
+    //     .bindPopup(addMarkerTooltip(offer),
+    //       {
+    //         keepInView: true,
+    //       },
+    //     );
+    // })
+};
+export {showOffersMarker};
 
-export {getUserOffers};
+getUserOffers()
+  .then ((offers) => {
+    offers.forEach((offer) => {
+      const sameOfferIcon =  L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+      const sameOfferMarker = L.marker({
+        lat: offer.location.lat,
+        lng: offer.location.lng,
+      },
+      {
+        icon: sameOfferIcon,
+      },
+      );
+      sameOfferMarker
+        .addTo(map)
+        .bindPopup(addMarkerTooltip(offer),
+          {
+            keepInView: true,
+          },
+        );
+    })
+  })
+

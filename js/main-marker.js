@@ -21,3 +21,5 @@ mainPinMarker.on('drag', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
   addressField.value = getCoordinate(lat, lng);
 });
+
+
