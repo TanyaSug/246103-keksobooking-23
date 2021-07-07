@@ -16,7 +16,7 @@ const isHousingGuestsOk = (_offer, _housingGuests) => true;
 const isHousingFeaturesOk = (_offer, _housingFeatures) => true;
 
 
-const showOffersMarker = (allOffers, currentFilters) => {
+export const showOffersMarker = (allOffers, currentFilters = {}) => {
   const {
     housingType,
     housingPrice,
@@ -45,9 +45,10 @@ const showOffersMarker = (allOffers, currentFilters) => {
     return true;
   })
     .slice (0, maxAmountOfferMarkers)
+    .forEach(showSingleMarker);
 };
-export {showOffersMarker};
-const showSingleMarker = (offer) => {
+
+export const showSingleMarker = (offer) => {
   const sameOfferIcon =  L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [40, 40],
@@ -69,8 +70,5 @@ const showSingleMarker = (offer) => {
       },
     );
 }
-getUserOffers()
-  .then ((offers) => {
-    offers.forEach(showSingleMarker)
-  })
+
 
