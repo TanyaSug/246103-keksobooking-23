@@ -45,54 +45,32 @@ const showOffersMarker = (allOffers, currentFilters) => {
     return true;
   })
     .slice (0, maxAmountOfferMarkers)
-    // .forEach((offer) => {
-    //   const sameOfferIcon =  L.icon({
-    //     iconUrl: 'img/pin.svg',
-    //     iconSize: [40, 40],
-    //     iconAnchor: [20, 40],
-    //   });
-    //   const sameOfferMarker = L.marker({
-    //     lat: offer.location.lat,
-    //     lng: offer.location.lng,
-    //   },
-    //   {
-    //     icon: sameOfferIcon,
-    //   },
-    //   );
-    //   sameOfferMarker
-    //     .addTo(map)
-    //     .bindPopup(addMarkerTooltip(offer),
-    //       {
-    //         keepInView: true,
-    //       },
-    //     );
-    // })
 };
 export {showOffersMarker};
-
+const showSingleMarker = (offer) => {
+  const sameOfferIcon =  L.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+  const sameOfferMarker = L.marker({
+      lat: offer.location.lat,
+      lng: offer.location.lng,
+    },
+    {
+      icon: sameOfferIcon,
+    },
+  );
+  sameOfferMarker
+    .addTo(map)
+    .bindPopup(addMarkerTooltip(offer),
+      {
+        keepInView: true,
+      },
+    );
+}
 getUserOffers()
   .then ((offers) => {
-    offers.forEach((offer) => {
-      const sameOfferIcon =  L.icon({
-        iconUrl: 'img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-      });
-      const sameOfferMarker = L.marker({
-        lat: offer.location.lat,
-        lng: offer.location.lng,
-      },
-      {
-        icon: sameOfferIcon,
-      },
-      );
-      sameOfferMarker
-        .addTo(map)
-        .bindPopup(addMarkerTooltip(offer),
-          {
-            keepInView: true,
-          },
-        );
-    })
+    offers.forEach(showSingleMarker)
   })
 
