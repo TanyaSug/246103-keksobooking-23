@@ -17,6 +17,7 @@ const isHousingFeaturesOk = (_offer, _housingFeatures) => true;
 
 
 export const showOffersMarker = (allOffers, currentFilters = {}) => {
+  console.log (currentFilters);
   const {
     housingType,
     housingPrice,
