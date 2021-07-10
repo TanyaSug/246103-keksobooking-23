@@ -1,6 +1,7 @@
 import {initialCoordinates} from './data.js';
 import {addressField} from './form.js';
 
+
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],

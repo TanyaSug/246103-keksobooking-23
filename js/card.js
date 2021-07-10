@@ -1,4 +1,6 @@
-const formField =  document.querySelector('.ad-form');
+import {formField} from './main.js';
+
+
 const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
