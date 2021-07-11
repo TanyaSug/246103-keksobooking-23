@@ -1,6 +1,5 @@
 import {formField} from './main.js';
 
-
 const cardTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
@@ -64,9 +63,9 @@ const createNewCard = () => {
   const cardFeatureElements = featureListElement.querySelectorAll('.popup__feature');
 
   const modifiers = features.map((feature) => `popup__feature--${feature}`);
-  cardFeatureElements.forEach((element) =>{
+  cardFeatureElements.forEach((element) => {
     const modifier = element.classList[1];
-    if (! modifiers.includes(modifier)) {
+    if (!modifiers.includes(modifier)) {
       element.remove();
     }
   });
@@ -98,9 +97,22 @@ const addMarkerTooltip = (data) => {
   nextCardElement.querySelector('.popup__text--price').textContent = `${data.offer.price}  ₽/ночь`;
   nextCardElement.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей`;
   nextCardElement.querySelector('.popup__text--time').textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
-  nextCardElement.querySelector('.popup__feature').textContent = data.offer.features;
+
+  const featureListElement = nextCardElement.querySelector('.popup__features');
+  featureListElement.querySelectorAll('.popup__feature').forEach((element) => {
+    // if features do not exist we return empty array
+    const features = data.offer.features || [];
+
+    // to match class names list with offers.features we modify the featured by adding "popup__feature--"
+    const modifiers = features.map((feature) => `popup__feature--${feature}`);
+
+    if(!modifiers.includes(element.classList[1])) {
+      element.remove();
+    }
+  });
+
   nextCardElement.querySelector('.popup__description').textContent = data.offer.description;
   nextCardElement.querySelector('.popup__photos').textContent = data.offer.photos;
   return nextCardElement;
 };
-export {createNewCard, addMarkerTooltip};
+export { createNewCard, addMarkerTooltip };

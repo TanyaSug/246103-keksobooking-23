@@ -140,25 +140,29 @@ toggleFormsCondition(true);
 // // close message block
 const closeMessageBlock = (messageBlock) => {
   messageBlock.remove();
-
 };
 
-const showMessageBlock = (isSuccess) => {
-
+const showMessageBlock = (isSuccess, errorText) => {
   let messageTemplate;
 
-  if(isSuccess) {
+  if (isSuccess) {
     messageTemplate = document.querySelector('#success')
       .content
       .querySelector('.success');
   } else {
+    // if isSuccess undefined
     messageTemplate = document.querySelector('#error')
       .content
       .querySelector('.error');
   }
-  const messageBlock = messageTemplate.cloneNode(true);
 
+  const messageBlock = messageTemplate.cloneNode(true);
   document.body.append(messageBlock);
+
+  // if error dialog and we want to replace the error text
+  if (!isSuccess && errorText) {
+    document.querySelector('.error__message').textContent = errorText;
+  }
 
   document.addEventListener('keydown', (evt) => {
     evt.preventDefault();

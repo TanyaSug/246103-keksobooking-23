@@ -49,5 +49,5 @@ export const getUserOffers = () => fetch(
     throw new Error(`${response.status} ${response.statusText}`);
   })
   .catch((err) => {
-    console.log(err);
+    throw new Error(err);
   });

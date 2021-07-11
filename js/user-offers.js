@@ -1,17 +1,10 @@
 /* eslint-disable */
-//  import {createNewCard} from './card.js';
-// import {initialCoordinates} from "./data";
 import {addMarkerTooltip} from './card.js';
 import {map} from './map.js';
 import {getUserOffers} from './api.js';
-
+import {markerGroup} from './main.js';
 const maxAmountOfferMarkers = 10;
 
-// features: (6) ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"]
-// housing-guests: "2"
-// housing-price: "low"
-// housing-rooms: "3"
-// housing-type: "flat"
 const PriceBreakPoints = {
   LOW: 10000,
   MIDDLE: 50000,
@@ -99,13 +92,15 @@ const checkHousingType = (offer, currentFilters) => {
 }
 
 export const showOffersMarker = (allOffers, currentFilters = {}) => {
-  console.log (currentFilters);
+  markerGroup.clearLayers();
 
   allOffers
-    .filter ((offer) => checkHousingType(offer,currentFilters))
-    .slice (0, maxAmountOfferMarkers)
+    .filter((offer) => checkHousingType(offer,currentFilters))
+    .slice(0, maxAmountOfferMarkers)
     .forEach(showSingleMarker);
 };
+
+
 
 export const showSingleMarker = (offer) => {
   const sameOfferIcon =  L.icon({
@@ -122,12 +117,11 @@ export const showSingleMarker = (offer) => {
     },
   );
   sameOfferMarker
-    .addTo(map)
+    .addTo(markerGroup)
     .bindPopup(addMarkerTooltip(offer),
       {
         keepInView: true,
       },
     );
-}
-
+};
 

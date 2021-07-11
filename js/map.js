@@ -2,7 +2,6 @@ import {toggleFormsCondition} from './form.js';
 import {createNewCard} from './card.js';
 import {initialCoordinates} from './data.js';
 
-
 export let map;
 
 export const createOfferMarker = (mainPinMarker) => {
@@ -48,4 +47,5 @@ export const initMap = (canvas, mainPinMarker) => {
 
   mainPinMarker.addTo(map);
 };
+
 
