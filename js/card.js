@@ -1,12 +1,11 @@
-const formField =  document.querySelector('.ad-form');
+import {formField} from './main.js';
+
+const cardTemplate = document.querySelector('#card')
+  .content
+  .querySelector('.popup');
 
 const createNewCard = () => {
-
-  const cardTemplate = document.querySelector('#card')
-    .content
-    .querySelector('.popup');
   const cardElement = cardTemplate.cloneNode(true);
-
   const cardTitle = formField.querySelector('#title');
   const popupTitle = cardElement.querySelector('.popup__title');
   if (cardTitle.value) {
@@ -35,8 +34,9 @@ const createNewCard = () => {
   } else {
     popupType.style.display = 'none';
   }
-  const cardRoom = formField.querySelector('#room_number');
+  const cardRoom =  formField.querySelector('#room_number');
   const cardGuest = formField.querySelector('#capacity');
+
   const popupTextCapacity = cardElement.querySelector('.popup__text--capacity');
   if (cardRoom.value && cardGuest.value) {
     popupTextCapacity.textContent = `${cardRoom.value} комнаты для ${cardGuest.value} гостей`;
@@ -63,9 +63,9 @@ const createNewCard = () => {
   const cardFeatureElements = featureListElement.querySelectorAll('.popup__feature');
 
   const modifiers = features.map((feature) => `popup__feature--${feature}`);
-  cardFeatureElements.forEach((element) =>{
+  cardFeatureElements.forEach((element) => {
     const modifier = element.classList[1];
-    if (! modifiers.includes(modifier)) {
+    if (!modifiers.includes(modifier)) {
       element.remove();
     }
   });
@@ -88,4 +88,31 @@ const createNewCard = () => {
   return cardElement;
 };
 
-export {createNewCard};
+const addMarkerTooltip = (data) => {
+  const nextCardElement = cardTemplate.cloneNode(true);
+
+  nextCardElement.querySelector('.popup__avatar').src = data.author.avatar ;
+  nextCardElement.querySelector('.popup__title').textContent = data.offer.title;
+  nextCardElement.querySelector('.popup__type').textContent = data.offer.type;
+  nextCardElement.querySelector('.popup__text--price').textContent = `${data.offer.price}  ₽/ночь`;
+  nextCardElement.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей`;
+  nextCardElement.querySelector('.popup__text--time').textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
+
+  const featureListElement = nextCardElement.querySelector('.popup__features');
+  featureListElement.querySelectorAll('.popup__feature').forEach((element) => {
+    // if features do not exist we return empty array
+    const features = data.offer.features || [];
+
+    // to match class names list with offers.features we modify the featured by adding "popup__feature--"
+    const modifiers = features.map((feature) => `popup__feature--${feature}`);
+
+    if(!modifiers.includes(element.classList[1])) {
+      element.remove();
+    }
+  });
+
+  nextCardElement.querySelector('.popup__description').textContent = data.offer.description;
+  nextCardElement.querySelector('.popup__photos').textContent = data.offer.photos;
+  return nextCardElement;
+};
+export { createNewCard, addMarkerTooltip };
