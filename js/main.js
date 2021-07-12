@@ -1,7 +1,7 @@
 import {mainPinMarker} from './main-marker.js';
 import {showMessageBlock} from './message-block.js';
 import {bindFormApi, getUserOffers} from './api.js';
-import {initMap, map} from './map.js';
+import {initMap} from './map.js';
 import {showOffersMarker} from './user-offers.js';
 
 // export const initialCoordinates =  {
@@ -16,7 +16,7 @@ const canvas = document.querySelector('#map-canvas');
 initMap(canvas, mainPinMarker);
 bindFormApi(formField, mapFilterForm, mainPinMarker);
 
-export const markerGroup = L.layerGroup().addTo(map);
+// export const markerGroup = L.layerGroup().addTo(map);
 
 const filterSelects = mapFilterForm.querySelectorAll('select');
 const featuresInputs = mapFilterForm.querySelectorAll('input[name=features]');
