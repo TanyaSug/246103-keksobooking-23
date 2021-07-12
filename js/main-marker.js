@@ -1,5 +1,5 @@
-import {initialCoordinates} from './data.js';
-import {addressField} from './form.js';
+// import {initialCoordinates} from './main.js';
+import {addressField, initialCoordinates} from './user-form.js';
 
 
 const mainPinIcon = L.icon({

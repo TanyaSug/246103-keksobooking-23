@@ -1,6 +1,6 @@
-import {toggleFormsCondition} from './form.js';
+import {toggleFormsCondition, initialCoordinates} from './user-form.js';
 import {createNewCard} from './card.js';
-import {initialCoordinates} from './data.js';
+// import {initialCoordinates} from './user-form.js';
 
 export let map;
 

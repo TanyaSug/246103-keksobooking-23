@@ -1,6 +1,6 @@
-import {showMessageBlock} from './form.js';
+import {showMessageBlock} from './message-block.js';
 import {createOfferMarker} from './map.js';
-import {initialCoordinates} from './data.js';
+import {initialCoordinates} from './user-form.js';
 
 
 export const bindFormApi = (formField, mapFilterForm, mainPinMarker) => {

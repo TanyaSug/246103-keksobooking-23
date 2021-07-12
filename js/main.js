@@ -1,13 +1,18 @@
 import {mainPinMarker} from './main-marker.js';
-import {showMessageBlock} from './form.js';
+import {showMessageBlock} from './message-block.js';
 import {bindFormApi, getUserOffers} from './api.js';
 import {initMap, map} from './map.js';
 import {showOffersMarker} from './user-offers.js';
 
+// export const initialCoordinates =  {
+//   lat: 35.68950,
+//   lng: 139.69171,
+// };
+
 export const formField = document.querySelector('.ad-form');
 const mapFilterForm = document.querySelector('.map__filters');
-
 const canvas = document.querySelector('#map-canvas');
+
 initMap(canvas, mainPinMarker);
 bindFormApi(formField, mapFilterForm, mainPinMarker);
 
