@@ -1,5 +1,5 @@
-import {addressField, initialCoordinates} from './user-form.js';
-
+import {addressField} from './user-form.js';
+import {initialCoordinates} from './initial-coords.js';
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -22,4 +22,10 @@ mainPinMarker.on('drag', (evt) => {
   addressField.value = getCoordinate(lat, lng);
 });
 
+// export const setMainPinMarker = (mainPinMarkerCoords) => {
+//   mainPinMarkerCoords.setLatLng({
+//     lat: initialCoordinates.lat,
+//     lng: initialCoordinates.lng,
+//   });
+// };
 

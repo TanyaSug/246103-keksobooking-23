@@ -1,17 +1,14 @@
-import {mainPinMarker} from './main-marker.js';
-import {showMessageBlock} from './message-block.js';
-import {bindFormApi, getUserOffers} from './api.js';
 import {initMap} from './map.js';
-import {showOffersMarker} from './user-offers.js';
+import {mainPinMarker} from './main-marker.js';
+import {bindFormApi, getUserOffers} from './api.js';
+import {showOffersMarker} from './filter-offers.js';
+import {showMessageBlock} from './message-block.js';
+import {formField, mapFilterForm, canvas} from './dom-elements.js';
 
-export const formField = document.querySelector('.ad-form');
-const mapFilterForm = document.querySelector('.map__filters');
-const canvas = document.querySelector('#map-canvas');
 
 initMap(canvas, mainPinMarker);
 bindFormApi(formField, mapFilterForm, mainPinMarker);
 
-// export const markerGroup = L.layerGroup().addTo(map);
 
 const filterSelects = mapFilterForm.querySelectorAll('select');
 const featuresInputs = mapFilterForm.querySelectorAll('input[name=features]');

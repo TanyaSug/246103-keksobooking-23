@@ -1,61 +1,8 @@
-// import {initialCoordinates} from './main.js';
-// import {formField} from './main.js';
+import {formField} from './dom-elements.js';
 import {formPriceInput} from  './form-validation.js';
-
-export const initialCoordinates =  {
-  lat: 35.68950,
-  lng: 139.69171,
-};
-// const MIN_TITLE_LENGTH = 30;
-// const MAX_TITLE_LENGTH = 100;
-// const MAX_PRICE_VALUE = 1000000;
-
-const formField =  document.querySelector('.ad-form');
-
-// const formTitleInput = formField.querySelector('#title');
-// formTitleInput.addEventListener('invalid', () => {
-//   if (formTitleInput.validity.tooShort) {
-//     formTitleInput.setCustomValidity ('Заголовок объявления должен состоять минимум из 30 символов');
-//   } else if (formTitleInput.validity.tooLong) {
-//     formTitleInput.setCustomValidity ('Заголовок объявления должен состоять максимум из 100 символов');
-//   } else if (formTitleInput.validity.valueMissing) {
-//     formTitleInput.setCustomValidity ('Обязательное поле');
-//   } else {
-//     formTitleInput.setCustomValidity ('');
-//   }
-// });
-//
-// formTitleInput.addEventListener('input', () => {
-//   const valueLength = formTitleInput.value.length;
-//   if (valueLength < MIN_TITLE_LENGTH) {
-//     formTitleInput.setCustomValidity (`Ещё ${ MIN_TITLE_LENGTH - valueLength } символов.`);
-//   } else if  (valueLength > MAX_TITLE_LENGTH) {
-//     formTitleInput.setCustomValidity (`Удалите лишние ${ valueLength - MAX_TITLE_LENGTH } символов.`);
-//   } else {
-//     formTitleInput.setCustomValidity ('');
-//   }
-//   formTitleInput.reportValidity ();
-// });
-//
-// const formPriceInput = formField.querySelector('#price');
-//
-// formPriceInput.addEventListener('invalid', () => {
-//   if (formPriceInput.validity.valueMissing) {
-//     formPriceInput.setCustomValidity ('Обязательное поле');
-//   } else {
-//     formPriceInput.setCustomValidity ('');
-//   }
-// });
-//
-// formPriceInput.addEventListener('input', () => {
-//   const priceValue = formPriceInput.value.length;
-//   if (priceValue > MAX_PRICE_VALUE) {
-//     formPriceInput.setCustomValidity('Максимальное значение поля 1 000 000.');
-//   } else {
-//     formPriceInput.setCustomValidity ('');
-//   }
-//   formTitleInput.reportValidity ();
-// });
+import {initialCoordinates} from './initial-coords.js';
+import {typeAndPrice} from './type-price-settings.js';
+import {validateTypePrice} from './type-price.js';
 
 const roomNumber = formField.querySelector('#room_number');
 const capacity = formField.querySelector('#capacity');
@@ -88,24 +35,24 @@ timeInSelect.addEventListener('change', onTimeChange);
 timeOutSelect.addEventListener('change', onTimeChange);
 
 
-const typeAndPrice = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
-
-const formTypeSelect = formField.querySelector('#type');
+export const formTypeSelect = formField.querySelector('#type');
 const getMinPrise = () => typeAndPrice[formTypeSelect.value];
 
 formTypeSelect.addEventListener('change', () => {
-  formPriceInput.setAttribute('min', getMinPrise());
+  // formPriceInput.setAttribute('min', getMinPrise());
   formPriceInput.setAttribute('placeholder', getMinPrise());
+  if (validateTypePrice(formTypeSelect.value, formPriceInput.value)) {
+    formTypeSelect.setCustomValidity('');
+    formPriceInput.setCustomValidity('');
+  } else {
+    formTypeSelect.setCustomValidity('Выбранный тип жилья и цена не согласованы');
+    formPriceInput.setCustomValidity('Выбранный тип жилья и цена не согласованы');
+  }
+  formTypeSelect.reportValidity();
 });
 
 // Координаты центра Токио
-const addressField = formField.querySelector('#address');
+export const addressField = formField.querySelector('#address');
 addressField.setAttribute('value', `широта: ${initialCoordinates.lat} долгота: ${initialCoordinates.lng}`);
 
 
@@ -113,7 +60,7 @@ addressField.setAttribute('value', `широта: ${initialCoordinates.lat} до
 const mapFilterForm = document.querySelector('.map__filters');
 const mapFilterElements = Array.from(mapFilterForm.children);
 const formElements = Array.from(formField.children);
-const toggleFormsCondition = (disabled) => {
+export const toggleFormsCondition = (disabled) => {
   if (disabled) {
     formField.classList.add('ad-form--disabled');
     mapFilterForm.classList.add('map__filters--disabled');
@@ -141,53 +88,12 @@ const toggleFormsCondition = (disabled) => {
 toggleFormsCondition(true);
 
 
-// // close message block
-// const closeMessageBlock = (messageBlock) => {
-//   messageBlock.remove();
-// };
-//
-// const showMessageBlock = (isSuccess, errorText) => {
-//   let messageTemplate;
-//
-//   if (isSuccess) {
-//     messageTemplate = document.querySelector('#success')
-//       .content
-//       .querySelector('.success');
-//   } else {
-//     // if isSuccess undefined
-//     messageTemplate = document.querySelector('#error')
-//       .content
-//       .querySelector('.error');
-//   }
-//
-//   const messageBlock = messageTemplate.cloneNode(true);
-//   document.body.append(messageBlock);
-//
-//   // if error dialog and we want to replace the error text
-//   if (!isSuccess && errorText) {
-//     document.querySelector('.error__message').textContent = errorText;
-//   }
-//
-//   document.addEventListener('keydown', (evt) => {
-//     evt.preventDefault();
-//     if ( evt.key === 'Escape' || evt.key === 'Esc') {
-//       closeMessageBlock(messageBlock);
-//     }
-//   });
-//   document.addEventListener('click', () => {
-//     closeMessageBlock(messageBlock);
-//   });
-// };
-
-
 // reset form data
 
-const formFieldReset = formField.querySelector('.ad-form__reset');
-formFieldReset.addEventListener('click', () => {
-  formField.reset();
-  mapFilterForm.reset();
-});
-
-export {toggleFormsCondition, addressField};
+// const formFieldReset = formField.querySelector('.ad-form__reset');
+// formFieldReset.addEventListener('click', () => {
+//   formField.reset();
+//   mapFilterForm.reset();
+// });
 
 

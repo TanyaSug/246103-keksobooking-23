@@ -1,6 +1,6 @@
-import {toggleFormsCondition, initialCoordinates} from './user-form.js';
-import {addMarkerTooltip, createNewCard} from './card.js';
-// import {initialCoordinates} from './user-form.js';
+import {toggleFormsCondition} from './user-form.js';
+import {initialCoordinates} from './initial-coords.js';
+import {addMarkerTooltip, createUserOfferPopup} from './offer-card-popup.js';
 
 export let map;
 export let markerGroup;
@@ -20,7 +20,7 @@ export const createOfferMarker = (mainPinMarker) => {
   );
   offerPinMarker
     .addTo(map)
-    .bindPopup(createNewCard(),
+    .bindPopup(createUserOfferPopup(),
       {
         keepInView: true,
       },
