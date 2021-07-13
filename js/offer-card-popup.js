@@ -1,10 +1,7 @@
-import {formField} from './main.js';
+import {formField, cardTemplate} from './dom-elements.js';
 
-const cardTemplate = document.querySelector('#card')
-  .content
-  .querySelector('.popup');
-
-const createNewCard = () => {
+// Создает карточку-описание для объявления созданного юзером
+export const createUserOfferPopup = () => {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = formField.querySelector('#title');
   const popupTitle = cardElement.querySelector('.popup__title');
@@ -88,7 +85,8 @@ const createNewCard = () => {
   return cardElement;
 };
 
-const addMarkerTooltip = (data) => {
+// Создает карточку-описание для похожих объявлений
+export const addMarkerTooltip = (data) => {
   const nextCardElement = cardTemplate.cloneNode(true);
 
   nextCardElement.querySelector('.popup__avatar').src = data.author.avatar ;
@@ -115,4 +113,4 @@ const addMarkerTooltip = (data) => {
   nextCardElement.querySelector('.popup__photos').textContent = data.offer.photos;
   return nextCardElement;
 };
-export { createNewCard, addMarkerTooltip };
+

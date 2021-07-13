@@ -1,8 +1,6 @@
 /* eslint-disable */
-import {addMarkerTooltip} from './card.js';
-import {map} from './map.js';
-import {getUserOffers} from './api.js';
-import {markerGroup} from './main.js';
+import {clearLayer, showSingleMarker} from './map.js';
+
 const maxAmountOfferMarkers = 10;
 
 const PriceBreakPoints = {
@@ -92,7 +90,7 @@ const checkHousingType = (offer, currentFilters) => {
 }
 
 export const showOffersMarker = (allOffers, currentFilters = {}) => {
-  markerGroup.clearLayers();
+  clearLayer();
 
   allOffers
     .filter((offer) => checkHousingType(offer,currentFilters))
@@ -102,26 +100,5 @@ export const showOffersMarker = (allOffers, currentFilters = {}) => {
 
 
 
-export const showSingleMarker = (offer) => {
-  const sameOfferIcon =  L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-  const sameOfferMarker = L.marker({
-      lat: offer.location.lat,
-      lng: offer.location.lng,
-    },
-    {
-      icon: sameOfferIcon,
-    },
-  );
-  sameOfferMarker
-    .addTo(markerGroup)
-    .bindPopup(addMarkerTooltip(offer),
-      {
-        keepInView: true,
-      },
-    );
-};
+
 

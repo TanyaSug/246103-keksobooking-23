@@ -1,7 +1,7 @@
-import {showMessageBlock} from './form.js';
+import {showMessageBlock} from './message-block.js';
 import {createOfferMarker} from './map.js';
-import {initialCoordinates} from './data.js';
-
+import {initialCoordinates} from './initial-coords.js';
+// import {setMainPinMarker} from './main-marker.js';
 
 export const bindFormApi = (formField, mapFilterForm, mainPinMarker) => {
   formField.addEventListener('submit', (evt) => {
@@ -23,6 +23,7 @@ export const bindFormApi = (formField, mapFilterForm, mainPinMarker) => {
             lat: initialCoordinates.lat,
             lng: initialCoordinates.lng,
           });
+          // setMainPinMarker(mainPinMarkerCoords);
           formField.reset();
           mapFilterForm.reset();
         }else {
