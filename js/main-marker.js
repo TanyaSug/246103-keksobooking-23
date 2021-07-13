@@ -1,4 +1,3 @@
-// import {initialCoordinates} from './main.js';
 import {addressField, initialCoordinates} from './user-form.js';
 
 

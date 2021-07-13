@@ -1,7 +1,6 @@
 /* eslint-disable */
-import {addMarkerTooltip} from './card.js';
 import {clearLayer, showSingleMarker} from './map.js';
-import {getUserOffers} from './api.js';
+
 const maxAmountOfferMarkers = 10;
 
 const PriceBreakPoints = {
