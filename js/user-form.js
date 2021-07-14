@@ -2,7 +2,7 @@ import {formField} from './dom-elements.js';
 import {formPriceInput} from  './form-validation.js';
 import {initialCoordinates} from './initial-coords.js';
 import {typeAndPrice} from './type-price-settings.js';
-import {validateTypePrice} from './type-price.js';
+import {isPriceInvalid} from './type-price.js';
 
 const roomNumber = formField.querySelector('#room_number');
 const capacity = formField.querySelector('#capacity');
@@ -39,16 +39,16 @@ export const formTypeSelect = formField.querySelector('#type');
 const getMinPrise = () => typeAndPrice[formTypeSelect.value];
 
 formTypeSelect.addEventListener('change', () => {
-  // formPriceInput.setAttribute('min', getMinPrise());
+  formPriceInput.value = '';
   formPriceInput.setAttribute('placeholder', getMinPrise());
-  if (validateTypePrice(formTypeSelect.value, formPriceInput.value)) {
+
+  if (isPriceInvalid(formTypeSelect.value, formPriceInput.value)) {
     formTypeSelect.setCustomValidity('');
     formPriceInput.setCustomValidity('');
   } else {
     formTypeSelect.setCustomValidity('Выбранный тип жилья и цена не согласованы');
     formPriceInput.setCustomValidity('Выбранный тип жилья и цена не согласованы');
   }
-  formTypeSelect.reportValidity();
 });
 
 // Координаты центра Токио
@@ -90,10 +90,10 @@ toggleFormsCondition(true);
 
 // reset form data
 
-// const formFieldReset = formField.querySelector('.ad-form__reset');
-// formFieldReset.addEventListener('click', () => {
-//   formField.reset();
-//   mapFilterForm.reset();
-// });
+const formAndMapFieldReset = formField.querySelector('.ad-form__reset');
+formAndMapFieldReset.addEventListener('click', () => {
+  formField.reset();
+  mapFilterForm.reset();
+});
 
 
