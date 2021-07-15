@@ -1,54 +1,48 @@
-import {formField, cardTemplate} from './dom-elements.js';
+import {cardTemplate, formTitleInput, formAddress, formPriceInput, formTypeSelect, roomNumberSelect,formField, capacitySelect, timeInSelect, timeOutSelect} from './dom-elements.js';
 
-// Создает карточку-описание для объявления созданного юзером
+
 export const createUserOfferPopup = () => {
   const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = formField.querySelector('#title');
   const popupTitle = cardElement.querySelector('.popup__title');
-  if (cardTitle.value) {
-    popupTitle.textContent = cardTitle.value;
+
+  if (formTitleInput.value) {
+    popupTitle.textContent = formTitleInput.value;
   } else {
     popupTitle.style.display = 'none';
   }
-  const cardAddress = formField.querySelector('#address');
+
   const popupTextAddress = cardElement.querySelector('.popup__text--address');
-  if (cardAddress.value) {
-    popupTextAddress.textContent = cardAddress.value;
+  if (formAddress.value) {
+    popupTextAddress.textContent = formAddress.value;
   } else {
     popupTextAddress.style.display = 'none';
   }
-  const cardPrice = formField.querySelector('#price');
+
   const popupTextPrice = cardElement.querySelector('.popup__text--price');
-  if (cardPrice.value) {
-    popupTextPrice.textContent = `${cardPrice.value}  ₽/ночь`;
+  if (formPriceInput.value) {
+    popupTextPrice.textContent = `${formPriceInput.value}  ₽/ночь`;
   } else {
     popupTextPrice.style.display = 'none';
   }
-  const cardType = formField.querySelector('#type');
   const popupType = cardElement.querySelector('.popup__type');
-  if (cardType.value) {
-    popupType.textContent = cardType.value;
+  if (formTypeSelect.value) {
+    popupType.textContent = formTypeSelect.value;
   } else {
     popupType.style.display = 'none';
   }
-  const cardRoom =  formField.querySelector('#room_number');
-  const cardGuest = formField.querySelector('#capacity');
 
   const popupTextCapacity = cardElement.querySelector('.popup__text--capacity');
-  if (cardRoom.value && cardGuest.value) {
-    popupTextCapacity.textContent = `${cardRoom.value} комнаты для ${cardGuest.value} гостей`;
+  if (roomNumberSelect.value && capacitySelect.value) {
+    popupTextCapacity.textContent = `${roomNumberSelect.value} комнаты для ${capacitySelect.value} гостей`;
   } else {
     popupTextCapacity.style.display = 'none';
   }
-  const cardCheckin = formField.querySelector('#timein');
-  const cardCheckout = formField.querySelector('#timeout');
   const popupTextTime = cardElement.querySelector('.popup__text--time');
-  if (cardCheckin.value && cardCheckout.value) {
-    popupTextTime.textContent = `Заезд после ${cardCheckin.value}, выезд до ${cardCheckout.value}`;
+  if (timeInSelect.value && timeOutSelect.value) {
+    popupTextTime.textContent = `Заезд после ${timeInSelect.value}, выезд до ${timeOutSelect.value}`;
   } else {
     popupTextTime.style.display = 'none';
   }
-
   const formFeatureList = formField.querySelector('.features');
   const featureElements = formFeatureList.querySelectorAll('.features__checkbox');
 
@@ -78,14 +72,12 @@ export const createUserOfferPopup = () => {
   const photoList = cardElement.querySelector('.popup__photos');
   photoList.style.display = 'none';
 
-
   const popupAvatar = cardElement.querySelector('.popup__avatar');
   popupAvatar.style.display = 'none';
 
   return cardElement;
 };
 
-// Создает карточку-описание для похожих объявлений
 export const addMarkerTooltip = (data) => {
   const nextCardElement = cardTemplate.cloneNode(true);
 
@@ -111,6 +103,7 @@ export const addMarkerTooltip = (data) => {
 
   nextCardElement.querySelector('.popup__description').textContent = data.offer.description;
   nextCardElement.querySelector('.popup__photos').textContent = data.offer.photos;
+
   return nextCardElement;
 };
 

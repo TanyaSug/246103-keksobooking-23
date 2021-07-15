@@ -23,7 +23,7 @@
       <div  id="map-canvas" class="map__canvas" style="width: 100%; height: 500px;"></div>
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
-        <form class="map__filters" method="POST" enctype="multipart/form-data" action="https://23.javascript.pages.academy/keksobooking"  autocomplete="off">
+        <form class="map__filters map__filters--disabled" method="POST" enctype="multipart/form-data" action="https://23.javascript.pages.academy/keksobooking"  autocomplete="off">
           <select name="housing-type" id="housing-type" class="map__filter">
             <option value="any" selected>Любой тип жилья</option>
             <option value="bungalow">Бунгало</option>
@@ -71,7 +71,7 @@
     <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
-      <form class="ad-form" method="POST" action="https://23.javascript.pages.academy/keksobooking" autocomplete="off">
+      <form class="ad-form ad-form--disabled" method="POST" action="https://23.javascript.pages.academy/keksobooking" autocomplete="off">
         <fieldset class="ad-form-header">
           <legend class="ad-form-header__title">Ваша фотография (для карты)</legend>
           <div class="ad-form-header__upload">

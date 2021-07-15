@@ -1,46 +1,39 @@
-import {formField} from './dom-elements.js';
-import {formPriceInput} from  './form-validation.js';
+import {timeInSelect,timeOutSelect,  formPriceInput, formAddress, formTypeSelect, roomNumberSelect, capacitySelect} from './dom-elements.js';
 import {initialCoordinates} from './initial-coords.js';
 import {typeAndPrice} from './type-price-settings.js';
 import {isPriceInvalid} from './type-price.js';
 
-const roomNumber = formField.querySelector('#room_number');
-const capacity = formField.querySelector('#capacity');
+export const  defaultPricePlaceholder = typeAndPrice.house;
+const roomNumberValue = '100';
 
-roomNumber.addEventListener('change',   () =>{
-  if (roomNumber.value === '100') {
-    for (let idx = 0; idx < capacity.children.length; idx++) {
-      capacity.children[idx].disabled = false;
+const getMinPrise = (type) => typeAndPrice[type];
+const onTimeChange = (evt) => {
+  timeOutSelect.value = timeInSelect.value = evt.target.value;
+};
+
+// match and disable rooms numbers with guests number
+roomNumberSelect.addEventListener('change',   () =>{
+  if (roomNumberSelect.value === roomNumberValue) {
+    for (let idx = 0; idx < capacitySelect.children.length; idx++) {
+      capacitySelect.children[idx].disabled = false;
     }
-    capacity.children[capacity.children.length - 1].disabled = false;
-    capacity.children[capacity.children.length - 1].selected = true;
+    capacitySelect.children[capacitySelect.children.length - 1].disabled = false;
+    capacitySelect.children[capacitySelect.children.length - 1].selected = true;
   } else {
-    for (let idx = 0; idx < capacity.children.length; idx++) {
-      if (idx < roomNumber.value) {
-        capacity.children[idx].disabled = false;
-      } else {
-        capacity.children[idx].disabled = true;
-      }
+    for (let idx = 0; idx < capacitySelect.children.length; idx++) {
+      capacitySelect.children[idx].disabled = idx >= roomNumberSelect.value;
     }
-    capacity.children[0].selected = true;
+    capacitySelect.children[0].selected = true;
   }
 });
 
-const timeInSelect = formField.querySelector('#timein');
-const timeOutSelect = formField.querySelector('#timeout');
-const onTimeChange = function (evt) {
-  timeOutSelect.value = timeInSelect.value = evt.target.value;
-};
+// match and limit time in and time out
 timeInSelect.addEventListener('change', onTimeChange);
 timeOutSelect.addEventListener('change', onTimeChange);
 
-
-export const formTypeSelect = formField.querySelector('#type');
-const getMinPrise = () => typeAndPrice[formTypeSelect.value];
-
-formTypeSelect.addEventListener('change', () => {
-  formPriceInput.value = '';
-  formPriceInput.setAttribute('placeholder', getMinPrise());
+// reset price value and placeholder, validate type and price fields
+formTypeSelect.addEventListener('change', (evt) => {
+  formPriceInput.placeholder = getMinPrise(evt.target.value);
 
   if (isPriceInvalid(formTypeSelect.value, formPriceInput.value)) {
     formTypeSelect.setCustomValidity('');
@@ -51,49 +44,7 @@ formTypeSelect.addEventListener('change', () => {
   }
 });
 
-// Координаты центра Токио
-export const addressField = formField.querySelector('#address');
-addressField.setAttribute('value', `широта: ${initialCoordinates.lat} долгота: ${initialCoordinates.lng}`);
-
-
-// Функция которая переключает страницу из активного состояния в неактивное и наоборот
-const mapFilterForm = document.querySelector('.map__filters');
-const mapFilterElements = Array.from(mapFilterForm.children);
-const formElements = Array.from(formField.children);
-export const toggleFormsCondition = (disabled) => {
-  if (disabled) {
-    formField.classList.add('ad-form--disabled');
-    mapFilterForm.classList.add('map__filters--disabled');
-    formElements.forEach(
-      (element) => {
-        element.setAttribute('disabled', disabled);
-      });
-    mapFilterElements.forEach(
-      (element) => {
-        element.setAttribute('disabled', disabled);
-      });
-  }else {
-    formField.classList.remove('ad-form--disabled');
-    mapFilterForm.classList.remove('map__filters--disabled');
-    formElements.forEach(
-      (element) => {
-        element.removeAttribute('disabled');
-      });
-    mapFilterElements.forEach(
-      (element) => {
-        element.removeAttribute('disabled');
-      });
-  }
-};
-toggleFormsCondition(true);
-
-
-// reset form data
-
-const formAndMapFieldReset = formField.querySelector('.ad-form__reset');
-formAndMapFieldReset.addEventListener('click', () => {
-  formField.reset();
-  mapFilterForm.reset();
-});
+// set address value
+formAddress.setAttribute('value', `широта: ${initialCoordinates.lat} долгота: ${initialCoordinates.lng}`);
 
 

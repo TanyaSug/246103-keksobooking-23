@@ -1,19 +1,10 @@
-import {formField} from './dom-elements.js';
+import {formPriceInput, formTitleInput, formTypeSelect} from './dom-elements.js';
 import {isPriceInvalid} from './type-price.js';
-import {formTypeSelect} from './user-form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
-const formTitleInput = formField.querySelector('#title');
-export const formPriceInput = formField.querySelector('#price');
-
 formTitleInput.addEventListener('invalid', () => {
-  // if (formTitleInput.validity.tooShort) {
-  //   formTitleInput.setCustomValidity('Заголовок объявления должен состоять минимум из 30 символов');
-  // } else if (formTitleInput.validity.tooLong) {
-  //   formTitleInput.setCustomValidity('Заголовок объявления должен состоять максимум из 100 символов');
-  // } else
   if (formTitleInput.validity.valueMissing) {
     formTitleInput.setCustomValidity('Обязательное поле');
   }

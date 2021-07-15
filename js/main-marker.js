@@ -1,4 +1,4 @@
-import {addressField} from './user-form.js';
+import {formAddress} from './dom-elements.js';
 import {initialCoordinates} from './initial-coords.js';
 
 const mainPinIcon = L.icon({
@@ -19,13 +19,7 @@ export const mainPinMarker = L.marker({
 const getCoordinate = (lat, lng) => `широта: ${lat.toFixed(4)}  долгота: ${lng.toFixed(4)}`;
 mainPinMarker.on('drag', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
-  addressField.value = getCoordinate(lat, lng);
+  formAddress.value = getCoordinate(lat, lng);
 });
 
-// export const setMainPinMarker = (mainPinMarkerCoords) => {
-//   mainPinMarkerCoords.setLatLng({
-//     lat: initialCoordinates.lat,
-//     lng: initialCoordinates.lng,
-//   });
-// };
 
