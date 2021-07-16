@@ -11,7 +11,6 @@ const onTimeChange = (evt) => {
   timeOutSelect.value = timeInSelect.value = evt.target.value;
 };
 
-// match and disable rooms numbers with guests number
 roomNumberSelect.addEventListener('change',   () =>{
   if (roomNumberSelect.value === roomNumberValue) {
     for (let idx = 0; idx < capacitySelect.children.length; idx++) {
@@ -27,11 +26,9 @@ roomNumberSelect.addEventListener('change',   () =>{
   }
 });
 
-// match and limit time in and time out
 timeInSelect.addEventListener('change', onTimeChange);
 timeOutSelect.addEventListener('change', onTimeChange);
 
-// reset price value and placeholder, validate type and price fields
 formTypeSelect.addEventListener('change', (evt) => {
   formPriceInput.placeholder = getMinPrise(evt.target.value);
 
@@ -44,7 +41,6 @@ formTypeSelect.addEventListener('change', (evt) => {
   }
 });
 
-// set address value
 formAddress.setAttribute('value', `широта: ${initialCoordinates.lat} долгота: ${initialCoordinates.lng}`);
 
 

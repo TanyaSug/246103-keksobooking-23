@@ -90,10 +90,8 @@ export const addMarkerTooltip = (data) => {
 
   const featureListElement = nextCardElement.querySelector('.popup__features');
   featureListElement.querySelectorAll('.popup__feature').forEach((element) => {
-    // if features do not exist we return empty array
     const features = data.offer.features || [];
 
-    // to match class names list with offers.features we modify the featured by adding "popup__feature--"
     const modifiers = features.map((feature) => `popup__feature--${feature}`);
 
     if(!modifiers.includes(element.classList[1])) {

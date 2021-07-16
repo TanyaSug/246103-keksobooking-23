@@ -10,7 +10,6 @@ export const showMessageBlock = (isSuccess, errorText) => {
       .content
       .querySelector('.success');
   } else {
-    // if isSuccess undefined
     messageTemplate = document.querySelector('#error')
       .content
       .querySelector('.error');
@@ -19,7 +18,6 @@ export const showMessageBlock = (isSuccess, errorText) => {
   const messageBlock = messageTemplate.cloneNode(true);
   document.body.append(messageBlock);
 
-  // if error dialog and we want to replace the error text
   if (!isSuccess && errorText) {
     document.querySelector('.error__message').textContent = errorText;
   }

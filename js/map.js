@@ -1,12 +1,9 @@
-import {showCurrentMarkerValue} from './main.js';
 import {toggleFormsCondition} from './toggle-form-condition.js';
 import {initialCoordinates} from './initial-coords.js';
 import {addMarkerTooltip, createUserOfferPopup} from './offer-card-popup.js';
-import {getUserOffers} from './api.js';
-import {showMessageBlock} from './message-block.js';
 
-export let map;
-export let markerGroup;
+let map;
+let markerGroup;
 
 const MAP_RESOLUTION = 13;
 const iconConfig = {
@@ -33,14 +30,10 @@ export const createOfferMarker = (mainPinMarker) => {
     );
 };
 
-export const initMap = (canvas, mainPinMarker) => {
+export const initMap = (canvas, mainPinMarker,runFiltering) => {
   map = L.map(canvas)
     .on('load', () => {
-      const allOffersPromise = getUserOffers();
-      allOffersPromise.then(showCurrentMarkerValue)
-        .catch((errorText) => {
-          showMessageBlock(false, errorText);
-        })
+      runFiltering()
         .then(() => toggleFormsCondition(false));
     })
     .setView({
