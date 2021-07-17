@@ -44,8 +44,8 @@ const isHousingRoomsOk = (offer, housingRooms) => {
   if (housingRooms === HousingTypes.any) {
     return true;
   }
-  // eslint-disable-next-line radix
-  const value = Number.parseInt(housingRooms);
+
+  const value = Number.parseInt(housingRooms, 10);
   return offer.offer.rooms ===value;
 };
 
@@ -54,8 +54,7 @@ const isHousingGuestsOk = (offer, housingGuests) => {
     return true;
   }
 
-  // eslint-disable-next-line radix
-  const value = Number.parseInt(housingGuests);
+  const value = Number.parseInt(housingGuests, 10);
   return offer.offer.guests === value;
 };
 
