@@ -1,12 +1,15 @@
-/* eslint-disable */
-import {clearLayer, showSingleMarker} from './map.js';
-
-const maxAmountOfferMarkers = 10;
-
-const PriceBreakPoints = {
+const priceBreakPoints = {
   LOW: 10000,
   MIDDLE: 50000,
-}
+};
+
+const HousingTypes = {
+  any: 'any',
+  low: 'low',
+  middle: 'middle',
+  high: 'high',
+};
+
 const isHousingFeaturesOk = (offer, housingFeatures) => {
   if (!Array.isArray(housingFeatures) || housingFeatures.length === 0) {
     return true;
@@ -16,12 +19,12 @@ const isHousingFeaturesOk = (offer, housingFeatures) => {
     if (!Array.isArray(offerFeatures) || offerFeatures.length === 0) {
       return false;
     }
-    return offerFeatures.some((offerFeature) => filterFeature === offerFeature)
-  })
+    return offerFeatures.some((offerFeature) => filterFeature === offerFeature);
+  });
 };
 
 const isHousingTypeOk = (offer, housingType) => {
-  if (housingType === 'any') {
+  if (housingType === HousingTypes.any) {
     return true;
   }
   return housingType === offer.offer.type;
@@ -29,76 +32,60 @@ const isHousingTypeOk = (offer, housingType) => {
 
 const isHousingPriceOk = (offer, housingPrice) => {
   switch (housingPrice) {
-    case 'any': return true;
-    case 'low': return offer.offer.price < PriceBreakPoints.LOW;
-    case 'middle': return offer.offer.price < PriceBreakPoints.MIDDLE && offer.offer.price >= PriceBreakPoints.LOW;
-    case 'high': return offer.offer.price >= PriceBreakPoints.MIDDLE;
+    case HousingTypes.any: return true;
+    case HousingTypes.low: return offer.offer.price < priceBreakPoints.LOW;
+    case HousingTypes.middle: return offer.offer.price < priceBreakPoints.MIDDLE && offer.offer.price >= priceBreakPoints.LOW;
+    case HousingTypes.high: return offer.offer.price >= priceBreakPoints.MIDDLE;
     default: return false;
   }
 };
 
 const isHousingRoomsOk = (offer, housingRooms) => {
-  if (housingRooms ==='any') {
+  if (housingRooms === HousingTypes.any) {
     return true;
   }
-  const value = Number.parseInt(housingRooms);
+
+  const value = Number.parseInt(housingRooms, 10);
   return offer.offer.rooms ===value;
 };
 
 const isHousingGuestsOk = (offer, housingGuests) => {
-  if (housingGuests ==='any') {
+  if (housingGuests === HousingTypes.any) {
     return true;
   }
-  const value = Number.parseInt(housingGuests);
+
+  const value = Number.parseInt(housingGuests, 10);
   return offer.offer.guests === value;
 };
 
-
-const checkHousingFeatures = (offer, currentFilters) => {
-  if (!isHousingFeaturesOk(offer, currentFilters['features'])) {
-    return false;
-  }
-  return true;
-}
+const checkHousingFeatures = (offer, currentFilters) => isHousingFeaturesOk(offer, currentFilters['features']);
 
 const checkHousingGuests = (offer, currentFilters) => {
   if (!isHousingGuestsOk(offer, currentFilters['housing-guests'])) {
     return false;
   }
-  return checkHousingFeatures(offer, currentFilters)
-}
+  return checkHousingFeatures(offer, currentFilters);
+};
 
 const checkHousingRooms = (offer, currentFilters) => {
   if (!isHousingRoomsOk (offer, currentFilters['housing-rooms'])) {
     return false;
   }
   return checkHousingGuests(offer, currentFilters);
-}
+};
 
 const checkHousingPrice = (offer, currentFilters) => {
   if (!isHousingPriceOk (offer, currentFilters['housing-price'])) {
-  return false;
+    return false;
   }
-  return checkHousingRooms(offer, currentFilters)
-}
+  return checkHousingRooms(offer, currentFilters);
+};
 
-const checkHousingType = (offer, currentFilters) => {
+export const checkHousingType = (offer, currentFilters) => {
   if (!isHousingTypeOk (offer, currentFilters['housing-type'])) {
     return false;
   }
-  return checkHousingPrice(offer, currentFilters)
-}
-
-export const showOffersMarker = (allOffers, currentFilters = {}) => {
-  clearLayer();
-
-  allOffers
-    .filter((offer) => checkHousingType(offer,currentFilters))
-    .slice(0, maxAmountOfferMarkers)
-    .forEach(showSingleMarker);
+  return checkHousingPrice(offer, currentFilters);
 };
-
-
-
 
 

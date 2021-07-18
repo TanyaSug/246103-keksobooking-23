@@ -1,9 +1,10 @@
 import {showMessageBlock} from './message-block.js';
 import {createOfferMarker} from './map.js';
 import {initialCoordinates} from './initial-coords.js';
-// import {setMainPinMarker} from './main-marker.js';
+import {formPriceInput} from './dom-elements.js';
+import {defaultPricePlaceholder} from './user-form.js';
 
-export const bindFormApi = (formField, mapFilterForm, mainPinMarker) => {
+export const submitForm = (formField, mapFilterForm, mainPinMarker) => {
   formField.addEventListener('submit', (evt) => {
     evt.preventDefault();
     createOfferMarker(mainPinMarker);
@@ -23,9 +24,9 @@ export const bindFormApi = (formField, mapFilterForm, mainPinMarker) => {
             lat: initialCoordinates.lat,
             lng: initialCoordinates.lng,
           });
-          // setMainPinMarker(mainPinMarkerCoords);
           formField.reset();
           mapFilterForm.reset();
+          formPriceInput.placeholder = defaultPricePlaceholder;
         }else {
           showMessageBlock(false);
         }

@@ -1,51 +1,30 @@
-import {initMap} from './map.js';
 import {mainPinMarker} from './main-marker.js';
-import {bindFormApi, getUserOffers} from './api.js';
-import {showOffersMarker} from './filter-offers.js';
 import {showMessageBlock} from './message-block.js';
-import {formField, mapFilterForm, canvas} from './dom-elements.js';
+import {submitForm, getUserOffers} from './api.js';
+import {initMap} from './map.js';
+import {showOffersMarker} from './same-markers.js';
+import {formField, mapFilterForm, canvas, featuresInputs, filterSelects, formPriceInput, formTitleInput, formTypeSelect} from './dom-elements.js';
+import {initializeFormTitleInput, initializePriceTypeValidators} from './form-validation.js';
+import {resetFormAndMapField} from './form-data-reset.js';
+import {toggleFormsCondition} from './toggle-form-condition.js';
+import { collectCurrentFilters} from './collect-filters.js';
+import {getCurrentFeatures} from './get-current-filters.js';
 
-
-initMap(canvas, mainPinMarker);
-bindFormApi(formField, mapFilterForm, mainPinMarker);
-
-
-const filterSelects = mapFilterForm.querySelectorAll('select');
-const featuresInputs = mapFilterForm.querySelectorAll('input[name=features]');
-
-const getCurrentFeatures = (featuresInp) => [...featuresInp]
-  .filter((element) => element.checked)
-  .map((element) => element.value);
+let timerId = 0;
+const DEBOUNCE_TIMEOUT = 500;
 
 const defaultFilters = {};
-
-const collectCurrentFilters = (currentFilters, featuresInp, selectedFilters) => {
-  currentFilters.features = getCurrentFeatures(featuresInp);
-  [...selectedFilters].reduce((accum, elem) => {
-    accum[elem.name] = elem.value;
-    return accum;
-  }, currentFilters);
-};
+const userOffersPromised = getUserOffers();
 
 const showCurrentMarkerValue = (allOffers) => {
   collectCurrentFilters(defaultFilters, featuresInputs, filterSelects);
   showOffersMarker(allOffers, defaultFilters);
 };
 
-// initial data fetching after map initialization
-const allOffersPromise = getUserOffers();
-allOffersPromise.then(showCurrentMarkerValue).catch((errorText) => {
+// initial data fetching after filtering
+const runFiltering = () => userOffersPromised.then(showCurrentMarkerValue).catch((errorText) => {
   showMessageBlock(false, errorText);
 });
-
-// initial data fetching after filtering
-let timerId = 0;
-const DEBOUNCE_TIMEOUT = 500;
-const runFiltering = () => {
-  allOffersPromise.then(showCurrentMarkerValue).catch((errorText) => {
-    showMessageBlock(false, errorText);
-  });
-};
 
 mapFilterForm.addEventListener('change', (evt) => {
   if (evt.target.name === 'features') {
@@ -56,3 +35,14 @@ mapFilterForm.addEventListener('change', (evt) => {
   clearTimeout(timerId);
   timerId = setTimeout(runFiltering, DEBOUNCE_TIMEOUT);
 });
+
+// disable elements and initially map
+toggleFormsCondition(true);
+initMap(canvas, mainPinMarker, runFiltering);
+
+initializeFormTitleInput(formTitleInput);
+initializePriceTypeValidators(formPriceInput, formTypeSelect);
+
+// subscribe submit and reset actions
+submitForm(formField, mapFilterForm, mainPinMarker);
+resetFormAndMapField(formField, mapFilterForm);

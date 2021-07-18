@@ -1,16 +1,19 @@
-import {toggleFormsCondition} from './user-form.js';
+import {toggleFormsCondition} from './toggle-form-condition.js';
 import {initialCoordinates} from './initial-coords.js';
 import {addMarkerTooltip, createUserOfferPopup} from './offer-card-popup.js';
 
 export let map;
 export let markerGroup;
 
+const MAP_RESOLUTION = 13;
+const iconConfig = {
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+};
+
 export const createOfferMarker = (mainPinMarker) => {
-  const offerPinIcon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const offerPinIcon = L.icon(iconConfig);
   const offerPinMarker = L.marker(
 
     mainPinMarker.getLatLng(),
@@ -27,17 +30,16 @@ export const createOfferMarker = (mainPinMarker) => {
     );
 };
 
-export const initMap = (canvas, mainPinMarker) => {
+export const initMap = (canvas, mainPinMarker, runFiltering) => {
   map = L.map(canvas)
     .on('load', () => {
-      setTimeout(() => {
-        toggleFormsCondition(false);
-      }, 1000);
+      runFiltering().then(() => toggleFormsCondition(false));
     })
     .setView({
       lat: initialCoordinates.lat,
       lng: initialCoordinates.lng,
-    }, 13);
+    }, MAP_RESOLUTION);
+
   markerGroup = L.layerGroup().addTo(map);
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -50,11 +52,7 @@ export const initMap = (canvas, mainPinMarker) => {
 };
 
 export const showSingleMarker = (offer) => {
-  const sameOfferIcon =  L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const sameOfferIcon =  L.icon(iconConfig);
   const sameOfferMarker = L.marker({
     lat: offer.location.lat,
     lng: offer.location.lng,
