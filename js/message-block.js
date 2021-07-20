@@ -24,20 +24,23 @@ export const showMessageBlock = (isSuccess, errorText) => {
     document.querySelector('.error__message').textContent = errorText;
   }
 
-  const handleEscape = (evt) => {
+  let screenClickHandler = null;
+
+  const escapePressedHandler = (evt) => {
     if ( evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
-      closeMessageBlock(messageBlock);
-      document.removeEventListener('keydown', handleEscape);
+      if (typeof screenClickHandler === 'function') {
+        screenClickHandler();
+      }
     }
   };
 
-  document.addEventListener('keydown', handleEscape);
-
-  const handleClick = () => {
+  screenClickHandler = () => {
     closeMessageBlock(messageBlock);
-    document.removeEventListener('click', handleClick);
+    document.removeEventListener('click', screenClickHandler);
+    document.removeEventListener('keydown', escapePressedHandler);
   };
 
-  document.addEventListener('click', handleClick);
+  document.addEventListener('keydown', escapePressedHandler);
+  document.addEventListener('click', screenClickHandler);
 };

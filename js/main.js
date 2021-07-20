@@ -9,6 +9,7 @@ import {resetFormAndMapField} from './form-data-reset.js';
 import {toggleFormsCondition} from './toggle-form-condition.js';
 import { collectCurrentFilters} from './collect-filters.js';
 import {getCurrentFeatures} from './get-current-filters.js';
+import {showAvatarPreview, showImgOfferPreview} from './avatar.js';
 
 let timerId = 0;
 const DEBOUNCE_TIMEOUT = 500;
@@ -44,5 +45,8 @@ initializeFormTitleInput(formTitleInput);
 initializePriceTypeValidators(formPriceInput, formTypeSelect);
 
 // subscribe submit and reset actions
-submitForm(formField, mapFilterForm, mainPinMarker);
-resetFormAndMapField(formField, mapFilterForm);
+submitForm(formField, mapFilterForm, mainPinMarker, runFiltering);
+resetFormAndMapField(formField, mapFilterForm, runFiltering);
+
+showAvatarPreview();
+showImgOfferPreview();

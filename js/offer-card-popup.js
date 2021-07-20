@@ -1,4 +1,6 @@
 import {cardTemplate, formTitleInput, formAddress, formPriceInput, formTypeSelect, roomNumberSelect,formField, capacitySelect, timeInSelect, timeOutSelect} from './dom-elements.js';
+import {avatarPreview, allImgOfferPreview} from './avatar.js';
+import {housingType} from './type-settings.js';
 
 
 export const createUserOfferPopup = () => {
@@ -26,7 +28,7 @@ export const createUserOfferPopup = () => {
   }
   const popupType = cardElement.querySelector('.popup__type');
   if (formTypeSelect.value) {
-    popupType.textContent = formTypeSelect.value;
+    popupType.textContent = housingType[formTypeSelect.value];
   } else {
     popupType.style.display = 'none';
   }
@@ -70,10 +72,10 @@ export const createUserOfferPopup = () => {
   }
 
   const photoList = cardElement.querySelector('.popup__photos');
-  photoList.style.display = 'none';
+  allImgOfferPreview.src ? photoList.src = allImgOfferPreview.src : photoList.style.display = 'none';
 
   const popupAvatar = cardElement.querySelector('.popup__avatar');
-  popupAvatar.style.display = 'none';
+  avatarPreview.src ? popupAvatar.src = avatarPreview.src : popupAvatar.style.display = 'none';
 
   return cardElement;
 };
@@ -81,19 +83,29 @@ export const createUserOfferPopup = () => {
 export const addMarkerTooltip = (data) => {
   const nextCardElement = cardTemplate.cloneNode(true);
 
-  nextCardElement.querySelector('.popup__avatar').src = data.author.avatar ;
-  nextCardElement.querySelector('.popup__title').textContent = data.offer.title;
-  nextCardElement.querySelector('.popup__type').textContent = data.offer.type;
-  nextCardElement.querySelector('.popup__text--price').textContent = `${data.offer.price}  ₽/ночь`;
-  nextCardElement.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей`;
-  nextCardElement.querySelector('.popup__text--time').textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
+  const popupAvatar = nextCardElement.querySelector('.popup__avatar');
+  data.author.avatar ? popupAvatar.src = data.author.avatar : popupAvatar.style.display = 'none';
+
+  const popupTitle = nextCardElement.querySelector('.popup__title');
+  popupTitle.textContent = data.offer.title;
+
+  const popupType =  nextCardElement.querySelector('.popup__type');
+  popupType.textContent =  housingType[data.offer.type];
+
+  const popupTextPrice = nextCardElement.querySelector('.popup__text--price');
+  popupTextPrice.textContent = `${data.offer.price}  ₽/ночь`;
+
+  const popupTextCapacity = nextCardElement.querySelector('.popup__text--capacity');
+  popupTextCapacity.textContent = `${data.offer.rooms} комнаты для ${data.offer.guests} гостей`;
+
+  const popupTextTime = nextCardElement.querySelector('.popup__text--time');
+  popupTextTime.textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
 
   const featureListElement = nextCardElement.querySelector('.popup__features');
   featureListElement.querySelectorAll('.popup__feature').forEach((element) => {
-    // if features do not exist we return empty array
+
     const features = data.offer.features || [];
 
-    // to match class names list with offers.features we modify the featured by adding "popup__feature--"
     const modifiers = features.map((feature) => `popup__feature--${feature}`);
 
     if(!modifiers.includes(element.classList[1])) {
@@ -101,8 +113,22 @@ export const addMarkerTooltip = (data) => {
     }
   });
 
-  nextCardElement.querySelector('.popup__description').textContent = data.offer.description;
-  nextCardElement.querySelector('.popup__photos').textContent = data.offer.photos;
+  const popupDescription = nextCardElement.querySelector('.popup__description');
+  popupDescription ? popupDescription.textContent = data.offer.description : popupDescription.style.display = 'none';
+
+  const photoListElement = nextCardElement.querySelector('.popup__photos');
+  const imgField = photoListElement.querySelector('.popup__photo');
+
+  const getPhotoList = ()=> {
+    photoListElement.removeChild(imgField);
+    const dataPhotos = data.offer.photos || [];
+    dataPhotos.forEach((src) => {
+      imgField.src = src;
+      photoListElement.appendChild(imgField.cloneNode());
+    });
+    return dataPhotos;
+  };
+  photoListElement.src = getPhotoList();
 
   return nextCardElement;
 };

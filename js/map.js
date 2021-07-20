@@ -2,8 +2,8 @@ import {toggleFormsCondition} from './toggle-form-condition.js';
 import {initialCoordinates} from './initial-coords.js';
 import {addMarkerTooltip, createUserOfferPopup} from './offer-card-popup.js';
 
-export let map;
-export let markerGroup;
+let map;
+let markerGroup;
 
 const MAP_RESOLUTION = 13;
 const iconConfig = {
@@ -51,6 +51,7 @@ export const initMap = (canvas, mainPinMarker, runFiltering) => {
   mainPinMarker.addTo(map);
 };
 
+
 export const showSingleMarker = (offer) => {
   const sameOfferIcon =  L.icon(iconConfig);
   const sameOfferMarker = L.marker({
@@ -71,4 +72,9 @@ export const showSingleMarker = (offer) => {
 };
 export const clearLayer = () => {
   markerGroup.clearLayers();
+};
+export const hidePopup = () => {
+  if(typeof map !== 'undefined') {
+    map.closePopup();
+  }
 };

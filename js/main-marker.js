@@ -16,7 +16,7 @@ export const mainPinMarker = L.marker({
   icon: mainPinIcon,
 },
 );
-const getCoordinate = (lat, lng) => `широта: ${lat.toFixed(4)}  долгота: ${lng.toFixed(4)}`;
+const getCoordinate = (lat, lng) => `широта: ${lat.toFixed(5)}  долгота: ${lng.toFixed(5)}`;
 mainPinMarker.on('drag', (evt) => {
   const {lat, lng} = evt.target.getLatLng();
   formAddress.value = getCoordinate(lat, lng);

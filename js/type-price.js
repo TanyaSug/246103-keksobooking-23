@@ -1,4 +1,4 @@
-import {typeAndPrice} from './type-price-settings.js';
+import {typeAndPrice} from './type-settings.js';
 
 export const isPriceInvalid = (type, price) => {
   const nPrice = Number(price);

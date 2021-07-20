@@ -2,13 +2,18 @@ import {showMessageBlock} from './message-block.js';
 import {createOfferMarker} from './map.js';
 import {initialCoordinates} from './initial-coords.js';
 import {formPriceInput} from './dom-elements.js';
+import {resetAvatarAndImgOfferPreview} from './avatar.js';
+import {hidePopup} from './map.js';
 import {defaultPricePlaceholder} from './user-form.js';
 
-export const submitForm = (formField, mapFilterForm, mainPinMarker) => {
+export const submitForm = (formField, mapFilterForm, mainPinMarker, runFiltering) => {
   formField.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    createOfferMarker(mainPinMarker);
+
     const formData = new FormData(evt.target);
+    // const data = Object.fromEntries(new FormData(evt.target).entries());
+
+    createOfferMarker(mainPinMarker);
 
     fetch(
       'https://23.javascript.pages.academy/keksobooking',
@@ -26,7 +31,10 @@ export const submitForm = (formField, mapFilterForm, mainPinMarker) => {
           });
           formField.reset();
           mapFilterForm.reset();
+          resetAvatarAndImgOfferPreview();
+          hidePopup();
           formPriceInput.placeholder = defaultPricePlaceholder;
+          runFiltering();
         }else {
           showMessageBlock(false);
         }
