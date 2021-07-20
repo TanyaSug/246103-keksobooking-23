@@ -11,8 +11,6 @@ export const submitForm = (formField, mapFilterForm, mainPinMarker, runFiltering
     evt.preventDefault();
 
     const formData = new FormData(evt.target);
-    // const data = Object.fromEntries(new FormData(evt.target).entries());
-
     createOfferMarker(mainPinMarker);
 
     fetch(

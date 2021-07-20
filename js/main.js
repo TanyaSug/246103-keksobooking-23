@@ -1,7 +1,7 @@
 import {mainPinMarker} from './main-marker.js';
 import {showMessageBlock} from './message-block.js';
 import {submitForm, getUserOffers} from './api.js';
-import {initMap} from './map.js';
+import {hidePopup, initMap} from './map.js';
 import {showOffersMarker} from './same-markers.js';
 import {formField, mapFilterForm, canvas, featuresInputs, filterSelects, formPriceInput, formTitleInput, formTypeSelect} from './dom-elements.js';
 import {initializeFormTitleInput, initializePriceTypeValidators} from './form-validation.js';
@@ -9,7 +9,8 @@ import {resetFormAndMapField} from './form-data-reset.js';
 import {toggleFormsCondition} from './toggle-form-condition.js';
 import { collectCurrentFilters} from './collect-filters.js';
 import {getCurrentFeatures} from './get-current-filters.js';
-import {showAvatarPreview, showImgOfferPreview} from './avatar.js';
+import {showAvatarPreview} from './avatar.js';
+import {showImgOfferPreview} from './housing-photos.js';
 
 let timerId = 0;
 const DEBOUNCE_TIMEOUT = 500;
@@ -35,6 +36,7 @@ mapFilterForm.addEventListener('change', (evt) => {
   }
   clearTimeout(timerId);
   timerId = setTimeout(runFiltering, DEBOUNCE_TIMEOUT);
+  hidePopup();
 });
 
 // disable elements and initially map

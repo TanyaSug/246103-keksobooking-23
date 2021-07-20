@@ -1,5 +1,5 @@
 import {cardTemplate, formTitleInput, formAddress, formPriceInput, formTypeSelect, roomNumberSelect,formField, capacitySelect, timeInSelect, timeOutSelect} from './dom-elements.js';
-import {avatarPreview, allImgOfferPreview} from './avatar.js';
+import {avatarPreview} from './avatar.js';
 import {housingType} from './type-settings.js';
 
 
@@ -71,8 +71,16 @@ export const createUserOfferPopup = () => {
     popupDescription.style.display = 'none';
   }
 
-  const photoList = cardElement.querySelector('.popup__photos');
-  allImgOfferPreview.src ? photoList.src = allImgOfferPreview.src : photoList.style.display = 'none';
+  const popupPhoto = cardElement.querySelector('.popup__photo');
+  const popupPhotoList = cardElement.querySelector('.popup__photos');
+  const allImgOfferPreview = formField.querySelectorAll('.ad-form__photo img');
+
+  popupPhotoList.removeChild(popupPhoto);
+  allImgOfferPreview.forEach((element) => {
+    popupPhoto.src = element.src;
+    popupPhotoList.appendChild(popupPhoto.cloneNode());
+  });
+
 
   const popupAvatar = cardElement.querySelector('.popup__avatar');
   avatarPreview.src ? popupAvatar.src = avatarPreview.src : popupAvatar.style.display = 'none';
@@ -119,16 +127,12 @@ export const addMarkerTooltip = (data) => {
   const photoListElement = nextCardElement.querySelector('.popup__photos');
   const imgField = photoListElement.querySelector('.popup__photo');
 
-  const getPhotoList = ()=> {
-    photoListElement.removeChild(imgField);
-    const dataPhotos = data.offer.photos || [];
-    dataPhotos.forEach((src) => {
-      imgField.src = src;
-      photoListElement.appendChild(imgField.cloneNode());
-    });
-    return dataPhotos;
-  };
-  photoListElement.src = getPhotoList();
+  photoListElement.removeChild(imgField);
+  const dataPhotos = data.offer.photos || [];
+  dataPhotos.forEach((src) => {
+    imgField.src = src;
+    photoListElement.appendChild(imgField.cloneNode());
+  });
 
   return nextCardElement;
 };
