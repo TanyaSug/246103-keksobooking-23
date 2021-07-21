@@ -1,4 +1,4 @@
-import {isPriceInvalid} from './type-price.js';
+import {isPriceValid} from './type-price.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -29,10 +29,12 @@ export const initializePriceTypeValidators = (formPriceInput, formTypeSelect) =>
     }
   });
   formPriceInput.addEventListener('input', () => {
-    if (isPriceInvalid(formTypeSelect.value, formPriceInput.value)) {
-      formPriceInput.setCustomValidity('Выбранный тип жилья и цена не согласованы');
-    } else {
+    if (isPriceValid(formTypeSelect.value, formPriceInput.value)) {
       formPriceInput.setCustomValidity('');
+
+    } else {
+      formPriceInput.setCustomValidity('Выбранный тип жилья и цена не согласованы');
+
     }
 
     formPriceInput.reportValidity();

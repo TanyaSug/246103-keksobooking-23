@@ -1,6 +1,7 @@
 import {toggleFormsCondition} from './toggle-form-condition.js';
 import {initialCoordinates} from './initial-coords.js';
-import {addMarkerTooltip, createUserOfferPopup} from './offer-card-popup.js';
+import {addMarkerTooltip} from './offer-card-popup.js';
+import {getDataOffer} from './data-converter.js';
 
 let map;
 let markerGroup;
@@ -12,7 +13,7 @@ const iconConfig = {
   iconAnchor: [20, 40],
 };
 
-export const createOfferMarker = (mainPinMarker) => {
+export const createOfferMarker = (mainPinMarker, data) => {
   const offerPinIcon = L.icon(iconConfig);
   const offerPinMarker = L.marker(
 
@@ -23,7 +24,7 @@ export const createOfferMarker = (mainPinMarker) => {
   );
   offerPinMarker
     .addTo(map)
-    .bindPopup(createUserOfferPopup(),
+    .bindPopup(addMarkerTooltip(data),
       {
         keepInView: true,
       },
@@ -52,19 +53,21 @@ export const initMap = (canvas, mainPinMarker, runFiltering) => {
 };
 
 
-export const showSingleMarker = (offer) => {
+export const showSingleMarker = (data) => {
   const sameOfferIcon =  L.icon(iconConfig);
   const sameOfferMarker = L.marker({
-    lat: offer.location.lat,
-    lng: offer.location.lng,
+    lat: data.location.lat,
+    lng: data.location.lng,
   },
   {
     icon: sameOfferIcon,
   },
   );
+  const dataOffer = getDataOffer(data);
+
   sameOfferMarker
     .addTo(markerGroup)
-    .bindPopup(addMarkerTooltip(offer),
+    .bindPopup(addMarkerTooltip(dataOffer),
       {
         keepInView: true,
       },

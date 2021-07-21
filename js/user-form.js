@@ -1,7 +1,7 @@
 import {timeInSelect,timeOutSelect,  formPriceInput, formAddress, formTypeSelect, roomNumberSelect, capacitySelect} from './dom-elements.js';
 import {initialCoordinates} from './initial-coords.js';
 import {typeAndPrice} from './type-settings.js';
-import {isPriceInvalid} from './type-price.js';
+import {isPriceValid} from './type-price.js';
 
 export const  defaultPricePlaceholder = typeAndPrice.house;
 const roomNumberValue = '100';
@@ -35,7 +35,7 @@ timeOutSelect.addEventListener('change', onTimeChange);
 formTypeSelect.addEventListener('change', (evt) => {
   formPriceInput.placeholder = getMinPrise(evt.target.value);
 
-  if (isPriceInvalid(formTypeSelect.value, formPriceInput.value)) {
+  if (isPriceValid(formTypeSelect.value, formPriceInput.value)) {
     formTypeSelect.setCustomValidity('');
     formPriceInput.setCustomValidity('');
   } else {

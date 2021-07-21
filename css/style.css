@@ -824,6 +824,12 @@ fieldset {
 
   font-size: 16px;
   line-height: 18px;
+
+  word-break: break-all;
+}
+
+.popup__description {
+  word-break: break-all;
 }
 
 .popup__text {

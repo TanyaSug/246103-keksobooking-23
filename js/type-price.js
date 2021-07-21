@@ -1,6 +1,6 @@
 import {typeAndPrice} from './type-settings.js';
 
-export const isPriceInvalid = (type, price) => {
+export const isPriceValid = (type, price) => {
   const nPrice = Number(price);
-  return typeAndPrice[type] > nPrice;
+  return typeAndPrice[type] < nPrice;
 };
